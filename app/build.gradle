@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.1'
+
+    defaultConfig {
+        applicationId "com.codechron.n6doubletapunlock"
+        minSdkVersion 21
+        targetSdkVersion 21
+        versionCode 1
+        versionName "1.1"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebugBuild false
+            renderscriptDebugBuild false
+            zipAlign true
+        }
+        debug {
+            zipAlign true
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

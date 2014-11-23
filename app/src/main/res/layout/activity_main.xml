@@ -1,0 +1,52 @@
+<!-- Copyright (c) 2014 Sean Kelley -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_gravity="center"
+    tools:context=".MainActivity">
+
+    <TextView android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/description"/>
+
+    <TextView android:id="@+id/status_text"
+        android:layout_below="@id/description"
+        android:layout_margin="10dp"
+        android:text="Double Tap to unlock is disabled."
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button android:id="@+id/activate_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@id/status_text"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activate" />
+
+    <TextView android:id="@+id/footer_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_alignParentBottom="true"
+        android:text="@string/footer"
+        android:autoLink="email"
+        />
+
+    <TextView android:id="@+id/version_text"
+        android:layout_above="@id/footer_text"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/version" />
+
+</RelativeLayout>

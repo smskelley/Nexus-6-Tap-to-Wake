@@ -1,0 +1,15 @@
+<resources>
+
+    <color name="primary">#87CEFA</color>
+    <color name="primary_dark">#00BFFF</color>
+    <color name="status_text_activated">#228B22</color>
+    <color name="status_text_deactivated">#b22222</color>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
+        <item name="android:colorPrimary">@color/primary</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+</resources>
