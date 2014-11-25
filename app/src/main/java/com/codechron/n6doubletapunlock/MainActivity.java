@@ -34,21 +34,24 @@ public class MainActivity extends Activity {
         updateStatusText();
         updateButtonText();
 
-        activateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!unlocked)
-                    unlocker.Activate();
-                else
-                    unlocker.Deactivate();
+        // conditionally attach OnClickListeners
+        if (unlocker.IsRooted()) {
+            activateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!unlocked)
+                        unlocker.Activate();
+                    else
+                        unlocker.Deactivate();
 
-                // Check the results..
-                unlocked = unlocker.IsActive();
-                updateStatusText();
-                updateButtonText();
-                unlocker.SaveState();
-            }
-        });
+                    // Check the results..
+                    unlocked = unlocker.IsActive();
+                    updateStatusText();
+                    updateButtonText();
+                    unlocker.SaveState();
+                }
+            });
+        }
 
     }
 
@@ -76,18 +79,25 @@ public class MainActivity extends Activity {
     }
 
     private void updateStatusText() {
-        if (unlocked) {
-            statusText.setText("Double Tap to unlock is enabled.");
+        if (!unlocker.IsRooted()) {
+            statusText.setTextColor(getResources().getColor(R.color.status_text_error));
+            statusText.setText(R.string.device_not_rooted);
+        }
+        else if (unlocked) {
+            statusText.setText(R.string.tap_to_wake_activated);
             statusText.setTextColor(getResources().getColor(R.color.status_text_activated));
         }
         else {
-            statusText.setText("Double Tap to unlock is disabled.");
+            statusText.setText(R.string.tap_to_wake_deactivated);
             statusText.setTextColor(getResources().getColor(R.color.status_text_deactivated));
         }
     }
 
     private void updateButtonText() {
-        if (unlocked)
+        if (!unlocker.IsRooted()) {
+            activateButton.setVisibility(View.GONE);
+        }
+        else if (unlocked)
             activateButton.setText("Deactivate");
         else
             activateButton.setText("Activate");

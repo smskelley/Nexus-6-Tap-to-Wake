@@ -26,7 +26,8 @@ public class PersistAtBootReceiver extends BroadcastReceiver {
                 @Override
                 protected Void doInBackground(Void... params) {
                     unlocker = new DoubleTapUnlocker(parentContext);
-                    unlocker.RestoreState();
+                    if (unlocker.IsRooted())
+                        unlocker.RestoreState();
                     return null;
                 }
 

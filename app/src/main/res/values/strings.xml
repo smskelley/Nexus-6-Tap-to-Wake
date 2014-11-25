@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="version">v1.1</string>
+    <!-- App Description Messages -->
+    <string name="version">v1.2</string>
     <string name="app_name">Nexus 6 Double Tap to Wake</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Informative Messages -->
     <string name="description">This app enables the double tap to wake feature.
     It has only been tested on the Nexus 6, and should not be run on any other device.
     Extensive testing has not been completed, so while this shouldn\'t harm your device,
@@ -14,5 +17,10 @@
         Created by: Sean Kelley
         \nQuestions? Comments? Nexus6TapToUnlock@gmail.com
     </string>
+
+    <!-- Status Messages -->
+    <string name="tap_to_wake_activated">Double Tap to wake is enabled.</string>
+    <string name="tap_to_wake_deactivated">Double Tap to wake is disabled.</string>
+    <string name="device_not_rooted">Device doesn\'t appear to be rooted.</string>
 
 </resources>

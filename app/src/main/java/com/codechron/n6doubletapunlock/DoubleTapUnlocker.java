@@ -26,11 +26,13 @@ public class DoubleTapUnlocker {
     private DataOutputStream toDevice;
     private DataInputStream fromDevice;
     private Context context;
+    private boolean rooted;
 
 
     public DoubleTapUnlocker(Context context) {
         this.context = context;
         suProcess = null;
+        rooted = true;
 
         // Attempt to start su
         try {
@@ -38,11 +40,27 @@ public class DoubleTapUnlocker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        fromDevice = new DataInputStream(suProcess.getInputStream());
-        toDevice = new DataOutputStream(suProcess.getOutputStream());
+
+        // We will consider the user to be root only if the following criteria is met:
+        // 1. We're able to run su and get a process
+        // 2. after doing so, we are root.
+        if (suProcess != null) {
+            fromDevice = new DataInputStream(suProcess.getInputStream());
+            toDevice = new DataOutputStream(suProcess.getOutputStream());
+            String user = CurrentUser();
+            if (user == null || !user.contains("root"))
+                rooted = false;
+        }
+        else {
+            rooted = false;
+        }
     }
 
     public void SaveState() {
+        // IsActive checked below requires root, so disallow saving state if we don't have root.
+        if (!rooted)
+            return;
+
         FileOutputStream outputStream = null;
         try {
             outputStream = context.openFileOutput(persistFile, Context.MODE_PRIVATE);
@@ -61,6 +79,10 @@ public class DoubleTapUnlocker {
     }
 
     public void RestoreState() {
+        // We can neither activate nor deactivate without root, so return early.
+        if (!rooted)
+            return;
+
         FileInputStream inputStream = null;
         String buffer;
         try {
@@ -84,6 +106,9 @@ public class DoubleTapUnlocker {
     }
 
     public void Activate() {
+        // We cannot activate without a rooted device
+        if (!rooted)
+            return;
         try {
             toDevice.writeBytes("echo AUTO > " + path + "\n");
             toDevice.flush();
@@ -94,6 +119,10 @@ public class DoubleTapUnlocker {
     }
 
     public void Deactivate() {
+        // We cannot deactivate without a rooted device
+        if (!rooted)
+            return;
+
         try {
             toDevice.writeBytes("echo OFF > " + path + "\n");
             toDevice.flush();
@@ -103,8 +132,12 @@ public class DoubleTapUnlocker {
         }
     }
 
+    public boolean IsRooted() {
+        return rooted;
+    }
+
     public boolean IsActive() {
-        if (suProcess == null)
+        if (!rooted)
             return false;
 
         try {
@@ -120,5 +153,21 @@ public class DoubleTapUnlocker {
         }
 
         return false;
+    }
+
+    public String CurrentUser() {
+        if (toDevice == null || fromDevice == null)
+            return null;
+
+        try {
+            toDevice.writeBytes("id\n");
+            toDevice.flush();
+            String user = fromDevice.readLine();
+            return user;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
