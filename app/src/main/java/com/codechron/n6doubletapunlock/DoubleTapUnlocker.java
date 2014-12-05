@@ -18,7 +18,7 @@ import android.os.AsyncTask;
  * Created by psion on 11/21/14.
  */
 public class DoubleTapUnlocker {
-    private static final String path = "/sys/bus/i2c/devices/1-004a/tsp";
+    private static final String path = "/sys/devices/virtual/input/lge_touch/dt_wake_enabled";
     private static final String persistFile = "state.dat";
     private static final String onState = "on";
     private static final String offState = "off";
@@ -110,7 +110,7 @@ public class DoubleTapUnlocker {
         if (!rooted)
             return;
         try {
-            toDevice.writeBytes("echo AUTO > " + path + "\n");
+            toDevice.writeBytes("echo 1 > " + path + "\n");
             toDevice.flush();
             SaveState();
         } catch (IOException e) {
@@ -124,7 +124,7 @@ public class DoubleTapUnlocker {
             return;
 
         try {
-            toDevice.writeBytes("echo OFF > " + path + "\n");
+            toDevice.writeBytes("echo 0 > " + path + "\n");
             toDevice.flush();
             SaveState();
         } catch (IOException e) {
@@ -144,8 +144,7 @@ public class DoubleTapUnlocker {
             toDevice.writeBytes("cat " + path + "\n");
             toDevice.flush();
             String status = fromDevice.readLine();
-            if (status != null &&
-                    (status.contains("ON") || status.contains("AUTO")))
+            if (status != null && status.contains("1"))
                 return true;
         } catch (IOException e) {
             e.printStackTrace();

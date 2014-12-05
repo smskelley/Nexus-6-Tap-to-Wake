@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
+    compileSdkVersion 17
     buildToolsVersion '21.1.1'
 
     defaultConfig {
-        applicationId "com.codechron.n6doubletapunlock"
-        minSdkVersion 21
+        applicationId "com.codechron.n4doubletapunlock"
+        minSdkVersion 17
         targetSdkVersion 21
         versionCode 2
         versionName "1.2"

@@ -2,13 +2,13 @@
 <resources>
 
     <!-- App Description Messages -->
-    <string name="version">v1.2</string>
-    <string name="app_name">Nexus 6 Double Tap to Wake</string>
+    <string name="version">v1.0</string>
+    <string name="app_name">Nexus 4 Double Tap to Wake</string>
     <string name="action_settings">Settings</string>
 
     <!-- Informative Messages -->
     <string name="description">This app enables the double tap to wake feature.
-    It has only been tested on the Nexus 6, and should not be run on any other device.
+    It is only intended for the Nexus 4, and should not be run on any other device.
     Extensive testing has not been completed, so while this shouldn\'t harm your device,
     use it at your own risk. Changes persist through reboot, so you shouldn\'t need to open
     this again. However, if you uninstall this app, then double tap to wake will be disabled
